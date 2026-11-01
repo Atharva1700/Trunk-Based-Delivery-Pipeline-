@@ -1,0 +1,11 @@
+# NOT RUN here (no Docker daemon in the sandbox). Shows the staging topology only.
+services:
+  app:
+    build: .
+    environment:
+      - RUN_SEED=0
+  pipeline-db:
+    image: alpine:3.20
+    volumes:
+      - ./results:/results
+    command: ["sh", "-c", "echo 'SQLite lives in ./results/pipeline.sqlite'"]

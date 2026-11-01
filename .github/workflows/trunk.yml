@@ -1,0 +1,21 @@
+# NOT EXECUTED here (no GitHub Actions run). The same steps were run locally.
+name: trunk
+on:
+  push:
+    branches: [main]
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install pyflakes pytest
+      - run: python -m pyflakes sample_app pipeline
+      - run: python -m pytest -q tests
+      - name: Pipeline for this commit
+        run: python -m pipeline.run --sha "$GITHUB_SHA" --seed "$GITHUB_RUN_ID" --db results/pipeline.sqlite
+      - name: Quarantine refresh
+        run: python -c "import sqlite3,sys;sys.path.insert(0,'.');from pipeline.store import PipelineStore;from pipeline.quarantine import refresh;s=PipelineStore('results/pipeline.sqlite');refresh(s)"
+      - uses: actions/upload-artifact@v4
+        with: { name: pipeline-db, path: results/pipeline.sqlite }

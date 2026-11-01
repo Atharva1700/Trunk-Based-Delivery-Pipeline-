@@ -1,0 +1,39 @@
+{
+  "real": {
+    "commits_before_quarantine": 40,
+    "test_stage_failures_before": 0,
+    "decisions": {
+      "sample_app.tests.test_network::test_upstream_is_reachable": {
+        "quarantine": true,
+        "flake_score": 0.333
+      }
+    },
+    "commits_after_quarantine": 20,
+    "test_stage_blocks_after": 0,
+    "seconds_total": 44.49,
+    "metrics": {
+      "deployed_commits": 60,
+      "lead_time_seconds": {
+        "median": 0.58,
+        "p90": 1.1
+      },
+      "deployments_per_day": 117836.236
+    }
+  },
+  "simulated": {
+    "tests": 300,
+    "commits": 60,
+    "labels": {
+      "flaky": 47,
+      "low_flake": 17,
+      "stable": 229,
+      "broken": 7
+    },
+    "quarantine_precision": 0.958,
+    "quarantine_recall": 0.979,
+    "tp": 46,
+    "fp": 2,
+    "fn": 1,
+    "broken_tests_quarantined": 0
+  }
+}
